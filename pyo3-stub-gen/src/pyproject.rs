@@ -30,8 +30,8 @@ impl PyProject {
             bail!("{} is not a pyproject.toml", path.display())
         }
         let mut out: PyProject = toml::de::from_str(&fs::read_to_string(path)?)?;
-        dbg!(&out);
         out.toml_path = path.to_path_buf();
+        dbg!(&out);
         Ok(out)
     }
 
@@ -48,13 +48,13 @@ impl PyProject {
 
     /// Return `tool.maturin.python_source` if it exists, which means the project is a mixed Rust/Python project.
     pub fn python_source(&self) -> Option<PathBuf> {
-        if let Some(tool) = &self.tool {
-            if let Some(maturin) = &tool.maturin {
-                if let Some(python_source) = &maturin.python_source {
-                    if let Some(base) = self.toml_path.parent() {
-                        return Some(base.join(python_source));
+        if let Some(tool) = dbg!(&self.tool) {
+            if let Some(maturin) = dbg!(&tool.maturin) {
+                if let Some(python_source) = dbg!(&maturin.python_source) {
+                    if let Some(base) = dbg!(self.toml_path.parent()) {
+                        return dbg!(Some(base.join(python_source)));
                     } else {
-                        return Some(PathBuf::from(python_source));
+                        return dbg!(Some(PathBuf::from(python_source)));
                     }
                 }
             }
