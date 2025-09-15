@@ -30,6 +30,7 @@ impl PyProject {
             bail!("{} is not a pyproject.toml", path.display())
         }
         let mut out: PyProject = toml::de::from_str(&fs::read_to_string(path)?)?;
+        dbg!(&out);
         out.toml_path = path.to_path_buf();
         Ok(out)
     }
